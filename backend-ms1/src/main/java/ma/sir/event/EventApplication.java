@@ -87,16 +87,17 @@ public class EventApplication {
     private void createEvenementState(){
         String reference = "reference";
         String code = "code";
-        for (int i = 1; i < 100; i++) {
+        List <String> status = Arrays.asList("programmer","en cours","cloturer");
+        for (int i = 0; i < status.size(); i++) {
             EvenementState item = new EvenementState();
-            item.setReference(fakeString(reference, i));
-            item.setCode(fakeString(code, i));
+            item.setReference(status.get(i));
+            item.setCode(status.get(i));
             evenementStateService.create(item);
         }
     }
     private void createSalle(){
-        String reference = "reference";
-        String code = "code";
+        String reference = "salle";
+        String code = "salle";
         for (int i = 1; i < 100; i++) {
             Salle item = new Salle();
             item.setReference(fakeString(reference, i));
@@ -105,8 +106,8 @@ public class EventApplication {
         }
     }
     private void createBlocOperatoir(){
-        String reference = "reference";
-        String code = "code";
+        String reference = "blocOp";
+        String code = "blocOp";
         for (int i = 1; i < 100; i++) {
             BlocOperatoir item = new BlocOperatoir();
             item.setReference(fakeString(reference, i));
