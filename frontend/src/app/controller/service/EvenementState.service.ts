@@ -31,4 +31,6 @@ export class EvenementStateService extends AbstractService<EvenementStateDto, Ev
     public constrcutCriteria(): EvenementStateCriteria {
         return new EvenementStateCriteria();
     }
+
+
 }

@@ -66,10 +66,14 @@
                                         [showClear]="true"  placeholder="{{'Evenement state' | translate}}" optionLabel="reference">
                             </p-dropdown>
                         </span>
+                       <span class=" p-float-label mr-3 align-search-items mt-4">
+                                                <button pButton pRipple label="{{'confirmer' | translate}}"  class="p-button-info mr-2" (click)="findPaginatedByCriteria()"></button>
+
+                        </span>
                 </div>
 
                 <div class="align-search-button">
-                    <button pButton pRipple label="{{'validate' | translate}}" icon="pi pi-sort-amount-down" class="p-button-info mr-2" (click)="findPaginatedByCriteria()"></button>
+                    <button pButton pRipple label="{{'validate' | translate}}" icon="pi pi-sort-amount-down" class="p-button-info mr-2" (click)="loadEvenements()"></button>
                 </div>
             </p-toolbar>
 

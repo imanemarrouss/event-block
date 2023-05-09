@@ -93,4 +93,8 @@ export class EvenementListAdminComponent extends AbstractListController<Evenemen
         //'Evenement state': this.criteria.evenementState?.reference ? this.criteria.evenementState?.reference : environment.emptyForExport ,
         }];
       }
+
+
+
+
 }
