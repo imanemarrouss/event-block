@@ -10,6 +10,8 @@ import { EvenementStateService } from 'src/app/controller/service/EvenementState
 
 import {EvenementStateDto} from 'src/app/controller/model/EvenementState.model';
 import {SalleDto} from 'src/app/controller/model/Salle.model';
+import {WebsocketService} from "../../../../../../controller/service/websocket.service";
+
 
 
 @Component({
@@ -19,12 +21,14 @@ import {SalleDto} from 'src/app/controller/model/Salle.model';
 export class EvenementListAdminComponent extends AbstractListController<EvenementDto, EvenementCriteria, EvenementService>  implements OnInit {
 
     fileName = 'Evenement';
-
+    evenements: any[] = [];
     salles :Array<SalleDto>;
     evenementStates :Array<EvenementStateDto>;
-  
-    constructor(evenementService: EvenementService, private salleService: SalleService, private evenementStateService: EvenementStateService) {
+    websocketMessages: string[] = [];
+
+    constructor(evenementService: EvenementService,private webSocketService: WebsocketService, private salleService: SalleService, private evenementStateService: EvenementStateService) {
         super(evenementService);
+
     }
 
     ngOnInit() : void {
@@ -33,6 +37,7 @@ export class EvenementListAdminComponent extends AbstractListController<Evenemen
       this.initCol();
       this.loadSalle();
       this.loadEvenementState();
+        this.connectWebSocket();
     }
 
     public async loadEvenements(){
@@ -93,8 +98,22 @@ export class EvenementListAdminComponent extends AbstractListController<Evenemen
         //'Evenement state': this.criteria.evenementState?.reference ? this.criteria.evenementState?.reference : environment.emptyForExport ,
         }];
       }
+    /*private connectWebSocket() {
+        this.webSocketService.connect(); // connect to the WebSocket server
+        this.webSocketService.onMessage().subscribe((message: string) => {
+            this.websocketMessages.push(message);
+            // Handle the message received from the server
+            // You can update the component's state or call a method to handle the message
+        });
+    }*/
 
-
+    private connectWebSocket() {
+        this.webSocketService.connect('ws://localhost:8036/api/admin/salle/${salleId}').subscribe((message: MessageEvent) => {
+            this.websocketMessages.push(message.data);
+            // Handle the message received from the server
+            // You can update the component's state or call a method to handle the message
+        });
+    }
 
 
 }

@@ -10,6 +10,7 @@ import ma.sir.event.dao.specification.core.EvenementSpecification;
 import ma.sir.event.service.facade.admin.EvenementAdminService;
 import ma.sir.event.zynerator.service.AbstractServiceImpl;
 import ma.sir.event.zynerator.util.ListUtil;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -31,6 +32,8 @@ EvenementHistoryDao> implements EvenementAdminService {
         return  dao.findByReference(t.getReference());
     }
 
+
+   // @Cacheable(cacheNames = "itemCache", key = "#id", cacheManager = "redisCacheManager")
     public List<Evenement> findBySalleId(Long id){
         return dao.findBySalleId(id);
     }

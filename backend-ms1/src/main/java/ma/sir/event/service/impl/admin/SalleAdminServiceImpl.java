@@ -34,6 +34,7 @@ SalleHistoryDao> implements SalleAdminService {
         return dao.findByBlocOperatoirId(id);
     }
     public int deleteByBlocOperatoirId(Long id){
+
         return dao.deleteByBlocOperatoirId(id);
     }
 

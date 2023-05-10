@@ -1,5 +1,6 @@
 package ma.sir.event.bean.core;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import java.time.LocalDateTime;
@@ -11,7 +12,15 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import ma.sir.event.zynerator.audit.AuditBusinessObject;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.Loader;
+import org.springframework.data.redis.core.RedisHash;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -20,9 +29,12 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "evenement")
-@JsonInclude(JsonInclude.Include.NON_NULL)
+//@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonSerialize
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "itemCache")
 @SequenceGenerator(name="evenement_seq",sequenceName="evenement_seq",allocationSize=1, initialValue = 1)
-public class Evenement   extends AuditBusinessObject     {
+
+public class Evenement   extends AuditBusinessObject implements Serializable {
 
     private Long id;
 
@@ -78,7 +90,7 @@ public class Evenement   extends AuditBusinessObject     {
     public void setEvenementEnd(LocalDateTime evenementEnd){
         this.evenementEnd = evenementEnd;
     }
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     public Salle getSalle(){
         return this.salle;
     }
@@ -91,7 +103,7 @@ public class Evenement   extends AuditBusinessObject     {
     public void setDescription(String description){
         this.description = description;
     }
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     public EvenementState getEvenementState(){
         return this.evenementState;
     }

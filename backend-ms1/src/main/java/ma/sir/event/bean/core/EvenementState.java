@@ -1,5 +1,6 @@
 package ma.sir.event.bean.core;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 
@@ -8,6 +9,7 @@ import java.util.Objects;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import ma.sir.event.zynerator.audit.AuditBusinessObject;
 import javax.persistence.*;
 import java.util.Objects;
@@ -17,9 +19,10 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "evenement_state")
-@JsonInclude(JsonInclude.Include.NON_NULL)
+//@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonSerialize
 @SequenceGenerator(name="evenement_state_seq",sequenceName="evenement_state_seq",allocationSize=1, initialValue = 1)
-public class EvenementState   extends AuditBusinessObject     {
+public class EvenementState   extends AuditBusinessObject    implements Serializable {
 
     private Long id;
 

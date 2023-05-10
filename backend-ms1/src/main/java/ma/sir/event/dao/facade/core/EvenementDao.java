@@ -1,5 +1,6 @@
 package ma.sir.event.dao.facade.core;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.Query;
 import ma.sir.event.zynerator.repository.AbstractRepository;
 import ma.sir.event.bean.core.Evenement;
@@ -12,7 +13,6 @@ import java.util.List;
 public interface EvenementDao extends AbstractRepository<Evenement,Long>  {
     Evenement findByReference(String reference);
     int deleteByReference(String reference);
-
     List<Evenement> findBySalleId(Long id);
     int deleteBySalleId(Long id);
     List<Evenement> findByEvenementStateId(Long id);

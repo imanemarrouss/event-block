@@ -7,6 +7,7 @@ import ma.sir.event.bean.core.Evenement;
 import ma.sir.event.bean.history.EvenementHistory;
 import ma.sir.event.dao.criteria.core.EvenementCriteria;
 import ma.sir.event.dao.criteria.history.EvenementHistoryCriteria;
+import ma.sir.event.dao.facade.core.EvenementDao;
 import ma.sir.event.service.facade.admin.EvenementAdminService;
 import ma.sir.event.ws.converter.EvenementConverter;
 import ma.sir.event.ws.dto.EvenementDto;
@@ -19,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import ma.sir.event.zynerator.process.Result;
 
 import org.springframework.web.multipart.MultipartFile;
 import ma.sir.event.zynerator.dto.FileTempDto;
@@ -41,7 +41,7 @@ public class EvenementRestAdmin  extends AbstractController<Evenement, Evenement
         return super.uploadMultipleFileAndGetChecksum(files);
     }
 
-    @ApiOperation("Finds a list of all evenements")
+  @ApiOperation("Finds a list of all evenements")
     @GetMapping("")
     public ResponseEntity<List<EvenementDto>> findAll() throws Exception {
         return super.findAll();
@@ -61,6 +61,8 @@ public class EvenementRestAdmin  extends AbstractController<Evenement, Evenement
     @ApiOperation("Saves the specified  evenement")
     @PostMapping("")
     public ResponseEntity<EvenementDto> save(@RequestBody EvenementDto dto) throws Exception {
+      //if findByReference# null update database redis , if not save f redis and local
+       // redis.save
         return super.save(dto);
     }
 
@@ -163,6 +165,5 @@ public class EvenementRestAdmin  extends AbstractController<Evenement, Evenement
     public EvenementRestAdmin (EvenementAdminService service, EvenementConverter converter) {
         super(service, converter);
     }
-
 
 }
