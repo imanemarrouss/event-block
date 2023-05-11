@@ -88,32 +88,36 @@ public class EvenementRestAdmin extends AbstractController<Evenement, EvenementD
         if (evenementRedis == null) {
             ResponseEntity<EvenementDto> savedResponse = super.save(dto);
             EvenementDto savedDto = savedResponse.getBody();
-            EvenementRedis savedRedis = new EvenementRedis();
-            savedRedis.setId(savedDto.getId());
-            savedRedis.setReference(savedDto.getReference());
-            savedRedis.setDescription(savedDto.getDescription());
-            savedRedis.setEvenementEnd(DateUtil.stringEnToDate(savedDto.getEvenementEnd()));
-            savedRedis.setEvenementStart(DateUtil.stringEnToDate(savedDto.getEvenementStart()));
-            savedRedis.setEvenementState(savedDto.getEvenementState());
-            savedRedis.setSalle(savedDto.getSalle());
-            evenementAdminRedisService.save(savedRedis);
-            return savedResponse;
-        } else {
+            return getEvenementDtoResponseEntity(savedResponse, savedDto);
+        }
+        else {
             ResponseEntity<EvenementDto> updatedResponse = super.update(dto);
             EvenementDto updatedDto = updatedResponse.getBody();
-            System.out.println(updatedDto.getSalle().getCode());
-            EvenementRedis updatedRedis = new EvenementRedis();
-            updatedRedis.setId(updatedDto.getId());
-            updatedRedis.setReference(updatedDto.getReference());
-            updatedRedis.setDescription(updatedDto.getDescription());
-            updatedRedis.setEvenementEnd(DateUtil.stringEnToDate(updatedDto.getEvenementEnd()));
-            updatedRedis.setEvenementStart(DateUtil.stringEnToDate(updatedDto.getEvenementStart()));
-            updatedRedis.setEvenementState(updatedDto.getEvenementState());
-            updatedRedis.setSalle(updatedDto.getSalle());
-            evenementAdminRedisService.save(updatedRedis);
-            return updatedResponse;
+            return getEvenementDtoResponseEntity(updatedResponse, updatedDto);
         }
     }
+
+    private ResponseEntity<EvenementDto> getEvenementDtoResponseEntity(ResponseEntity<EvenementDto> savedResponse, EvenementDto savedDto) {
+        EvenementRedis savedRedis = new EvenementRedis();
+        savedRedis.setId(savedDto.getId());
+        savedRedis.setReference(savedDto.getReference());
+        savedRedis.setDescription(savedDto.getDescription());
+        savedRedis.setEvenementEnd(DateUtil.stringEnToDate(savedDto.getEvenementEnd()));
+        savedRedis.setEvenementStart(DateUtil.stringEnToDate(savedDto.getEvenementStart()));
+        savedRedis.setEvenementState(savedDto.getEvenementState());
+        savedRedis.setSalle(savedDto.getSalle());
+        evenementAdminRedisService.save(savedRedis);
+        return savedResponse;
+    }
+
+
+
+
+
+
+
+
+
 
     @PutMapping("")
     public ResponseEntity<EvenementDto> update(@RequestBody EvenementDto dto) throws Exception {

@@ -174,7 +174,7 @@ public class AbstractController<T extends AuditBusinessObject, DTO extends BaseD
 
     public ResponseEntity<DTO> update(DTO dto) throws Exception {
         ResponseEntity<DTO> res ;
-        if (dto.getId() == null || service.findById(dto.getId()) == null) {
+        if (dto == null || service.findById(dto.getId()) == null) {
             throw new Exception("The resource you are trying to update does not exist.");
         }
         else {

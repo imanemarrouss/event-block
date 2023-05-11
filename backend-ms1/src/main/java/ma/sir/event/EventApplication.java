@@ -7,6 +7,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Stream;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +41,64 @@ public class EventApplication {
 
     public static void main(String[] args) {
         ctx=SpringApplication.run(EventApplication.class, args);
+        constructData();
     }
+
+
+    public static String constructDescription(int i) {
+        String description = "desc_patient" + ((i % 10) + 1);
+        return " \"description\": \"" + description + "\" ";
+    }
+    public static String constructReference(int i) {
+        String evenement = "EV-" + ((i % 100) + 1);
+        String salle = "_S-" + (i % 100);
+        String blocOperatoir = "_B-" + ((i % 3) + 1);
+        String date = "_" + constructDate();
+        return " \"reference\": \"" + evenement + salle + blocOperatoir + date + "\" ";
+    }
+
+    public static String constructDate() {
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+        return now.format(formatter);
+    }
+
+    public static String constructData() {
+        String res = "";
+        int lastElement = 100;
+        for (int i = 1; i <= lastElement; i++) {
+            String reference = constructReference(i);
+            String description = constructDescription(i);
+            res += "{ " + reference +  ", "  + description + " }";
+
+            if (i < lastElement) {
+                res += ",";
+            }
+        }
+        try {
+            FileWriter fileWriter = new FileWriter("data.json");
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            bufferedWriter.write("[\n" + res + "]");
+            bufferedWriter.close();
+            System.out.println("Data saved successfully to data.json file.");
+        } catch (IOException e) {
+            System.out.println("Error while saving data to data.json file.");
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     @Bean
@@ -57,7 +119,7 @@ public class EventApplication {
     @Bean
     public CommandLineRunner demo(UserService userService, RoleService roleService) {
     return (args) -> {
-        if(true){
+        if(false){
 
             createEvenementState();
             createSalle();
