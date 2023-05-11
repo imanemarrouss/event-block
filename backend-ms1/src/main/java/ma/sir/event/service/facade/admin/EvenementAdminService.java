@@ -13,6 +13,7 @@ public interface EvenementAdminService extends  IService<Evenement,EvenementCrit
     List<Evenement> findByEvenementStateId(Long id);
     int deleteByEvenementStateId(Long id);
 
+    Evenement findByReference(String reference);
 
 
 }

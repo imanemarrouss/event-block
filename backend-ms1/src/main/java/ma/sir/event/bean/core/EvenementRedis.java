@@ -1,13 +1,16 @@
 package ma.sir.event.bean.core;
 
+import ma.sir.event.ws.dto.EvenementStateDto;
+import ma.sir.event.ws.dto.SalleDto;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
 import javax.persistence.Column;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @RedisHash("Evenement")
-public class EvenementRedis {
+public class EvenementRedis  implements Serializable {
     @Id
     private Long id;
 
@@ -18,9 +21,9 @@ public class EvenementRedis {
     @Column(length = 500)
     private String description;
 
-    private Salle salle ;
+    private SalleDto salle ;
 
-    private EvenementState evenementState ;
+    private EvenementStateDto evenementState ;
 
     public Long getId() {
         return id;
@@ -62,19 +65,19 @@ public class EvenementRedis {
         this.description = description;
     }
 
-    public Salle getSalle() {
+    public SalleDto getSalle() {
         return salle;
     }
 
-    public void setSalle(Salle salle) {
+    public void setSalle(SalleDto salle) {
         this.salle = salle;
     }
 
-    public EvenementState getEvenementState() {
+    public EvenementStateDto getEvenementState() {
         return evenementState;
     }
 
-    public void setEvenementState(EvenementState evenementState) {
+    public void setEvenementState(EvenementStateDto evenementState) {
         this.evenementState = evenementState;
     }
 }

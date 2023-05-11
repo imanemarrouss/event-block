@@ -47,6 +47,11 @@ EvenementHistoryDao> implements EvenementAdminService {
         return dao.deleteByEvenementStateId(id);
     }
 
+    @Override
+    public Evenement findByReference(String reference) {
+        return dao.findByReference(reference);
+    }
+
     public void configure() {
         super.configure(Evenement.class,EvenementHistory.class, EvenementHistoryCriteria.class, EvenementSpecification.class);
     }

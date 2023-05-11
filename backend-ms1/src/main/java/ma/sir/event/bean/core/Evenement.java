@@ -33,7 +33,6 @@ import java.util.Objects;
 @JsonSerialize
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "itemCache")
 @SequenceGenerator(name="evenement_seq",sequenceName="evenement_seq",allocationSize=1, initialValue = 1)
-
 public class Evenement   extends AuditBusinessObject implements Serializable {
 
     private Long id;

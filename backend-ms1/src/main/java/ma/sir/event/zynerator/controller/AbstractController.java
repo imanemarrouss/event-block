@@ -157,7 +157,7 @@ public class AbstractController<T extends AuditBusinessObject, DTO extends BaseD
     }
 
 
-    public ResponseEntity<DTO> update(DTO dto) throws Exception {
+  /*  public ResponseEntity<DTO> update(DTO dto) throws Exception {
         ResponseEntity<DTO> res ;
         if (dto.getId() == null || service.findById(dto.getId()) == null)
             res = new ResponseEntity<>(HttpStatus.CONFLICT);
@@ -169,7 +169,24 @@ public class AbstractController<T extends AuditBusinessObject, DTO extends BaseD
             res = new ResponseEntity<>(myDto, HttpStatus.OK);
         }
         return res;
+    }*/
+
+
+    public ResponseEntity<DTO> update(DTO dto) throws Exception {
+        ResponseEntity<DTO> res ;
+        if (dto.getId() == null || service.findById(dto.getId()) == null) {
+            throw new Exception("The resource you are trying to update does not exist.");
+        }
+        else {
+            T t = service.findById(dto.getId());
+            converter.copy(dto,t);
+            T updated = service.update(t);
+            DTO myDto = converter.toDto(updated);
+            res = new ResponseEntity<>(myDto, HttpStatus.OK);
+        }
+        return res;
     }
+
 
 
     public ResponseEntity<List<DTO>> delete(List<DTO> dtos) throws Exception {
@@ -394,5 +411,9 @@ public class AbstractController<T extends AuditBusinessObject, DTO extends BaseD
     public AbstractController(SERV service, CONV converter) {
         this.service = service;
         this.converter = converter;
+    }
+
+    protected T findByReference(T reference) {
+        return service.findByReferenceEntity(reference);
     }
 }

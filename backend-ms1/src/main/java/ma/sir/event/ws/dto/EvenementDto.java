@@ -8,9 +8,11 @@ import java.util.Date;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.data.redis.core.RedisHash;
 
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@RedisHash("Evenement")
 public class EvenementDto  extends AuditBaseDto {
 
     private String reference  ;
